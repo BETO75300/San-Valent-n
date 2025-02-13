@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Valentín</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffebee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+        h1 {
+            color: #e91e63;
+            font-size: 2.5em;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        #si {
+            background-color: #e91e63;
+            color: white;
+        }
+        #no {
+            background-color: #f44336;
+            color: white;
+            position: absolute;
+        }
+        .heart {
+            position: absolute;
+            color: #e91e63;
+            font-size: 20px;
+            animation: fall 5s linear infinite;
+            z-index: 1;
+        }
+        @keyframes fall {
+            0% { top: -10%; }
+            100% { top: 110%; }
+        }
+        .message {
+            display: none;
+            font-size: 2em;
+            color: #e91e63;
+            margin-top: 20px;
+            animation: fadeIn 2s;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¿Quieres ser mi San Valentín?</h1>
+        <div class="buttons">
+            <button id="si">Sí</button>
+            <button id="no">No</button>
+        </div>
+        <div id="message" class="message">¡Yo sabía! 💖</div>
+    </div>
+
+    <script>
+        const siButton = document.getElementById('si');
+        const noButton = document.getElementById('no');
+        const message = document.getElementById('message');
+
+        siButton.addEventListener('click', () => {
+            message.style.display = 'block';
+            siButton.style.display = 'none';
+            noButton.style.display = 'none';
+            createHearts(50); // Lluvia de corazones
+        });
+
+        noButton.addEventListener('mouseover', () => {
+            moveNoButton();
+        });
+
+        noButton.addEventListener('click', () => {
+            moveNoButton();
+        });
+
+        function moveNoButton() {
+            const x = Math.random() * (window.innerWidth - noButton.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noButton.offsetHeight);
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+        }
+
+        // Crear corazones que caen
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        function createHearts(count) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(createHeart, i * 100);
+            }
+        }
+
+        // Corazones iniciales
+        createHearts(20);
+    </script>
+</body>
+</html>
